@@ -38,28 +38,28 @@ def tweet(tweet_text):
 # notifies user of DM's from account using email smtplib
 
 
+if __name__ == "__main__":
+    # Define the tweet
+    tweet_text = chat_gpt(user_message="draft a post")
+    print(tweet_text)
+    #sys.exit()
+    retry = True
+    while retry == True:
+        try:
+            tweet(tweet_text)
 
-# Define the tweet
-tweet_text = chat_gpt(user_message="draft a post")
-print(tweet_text)
-#sys.exit()
-retry = True
-while retry == True:
-    try:
-        tweet(tweet_text)
+            #checks past tweets
+            file = "post-history.txt"
+            if not os.path.exists(file):
+                with open(file, 'w') as f:
+                    f.write(f"")
 
-        #checks past tweets
-        file = "post-history.txt"
-        if not os.path.exists(file):
-            with open(file, 'w') as f:
-                f.write(f"")
+            with open(file, 'a') as f:
+                f.write(f"-- Post History -- {tweet_text} -- Post History --\n")
+            retry = False
 
-        with open(file, 'a') as f:
-            f.write(f"-- Post History -- {tweet_text} -- Post History --\n")
-        retry = False
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        authenticate()
-        retry = True
-    
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            authenticate()
+            retry = True
+        
