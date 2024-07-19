@@ -8,8 +8,9 @@ file = "post-history.txt"
 # Read the file content
 with open(file, 'r') as f:
     post_history = f.read()
-    
+
 def chat_gpt(user_message):
+    print(f"Post history: {post_history}")
 
     client = OpenAI(
         # This is the default and can be omitted

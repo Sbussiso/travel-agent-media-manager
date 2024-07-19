@@ -54,7 +54,7 @@ while retry == True:
             with open(file, 'w') as f:
                 f.write(f"")
 
-        with open(file, 'w') as f:
+        with open(file, 'a') as f:
             f.write(f"-- Post History -- {tweet_text} -- Post History --\n")
         retry = False
 
