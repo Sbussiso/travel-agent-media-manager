@@ -2,6 +2,8 @@ import json
 import requests
 from requests_oauthlib import OAuth1
 from gpt import chat_gpt
+from authentication import authenticate
+import os, sys
 
 #tweet function using credentials
 def tweet(tweet_text):
@@ -38,10 +40,26 @@ def tweet(tweet_text):
 
 
 # Define the tweet
-gpt_response = chat_gpt(user_message="draft a post")
+tweet_text = chat_gpt(user_message="draft a post")
+print(tweet_text)
+#sys.exit()
+retry = True
+while retry == True:
+    try:
+        tweet(tweet_text)
 
-if len(gpt_response) < 200:
-    tweet_text = gpt_response
-    tweet(tweet_text)
-else:
-    print("tweet is too long")
+        #checks past tweets
+        file = "post-history.txt"
+        if not os.path.exists(file):
+            with open(file, 'w') as f:
+                f.write(f"")
+
+        with open(file, 'w') as f:
+            f.write(f"-- Post History -- {tweet_text} -- Post History --\n")
+        retry = False
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        authenticate()
+        retry = True
+    

@@ -4,6 +4,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+file = "post-history.txt"
+# Read the file content
+with open(file, 'r') as f:
+    post_history = f.read()
+    
 def chat_gpt(user_message):
 
     client = OpenAI(
@@ -15,7 +20,10 @@ def chat_gpt(user_message):
         messages=[
             {
                 "role": "system",
-                "content": "You are a twitter social media manager for the travel agency 'Dube Travels'. All responses must be 200 characters or less ",
+                "content": f'''
+                            You are a twitter social media manager for the travel agency 'Dube Travels'. 
+                            All responses must be 200 characters or less. 
+                            Your responses must be different than your previous responses here: {post_history}''',
             },
             {
                 "role": "user",

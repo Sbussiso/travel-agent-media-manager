@@ -6,11 +6,11 @@ from requests_oauthlib import OAuth1Session
 
 load_dotenv()
 
-
 # File to save credentials
 CREDENTIALS_FILE = "twitter_credentials.json"
 
 def authenticate():
+
     consumer_key = os.getenv("CONSUMER_KEY")
     consumer_secret = os.getenv("CONSUMER_SECRET")
 
@@ -63,6 +63,7 @@ def authenticate():
         }, file)
 
     return consumer_key, consumer_secret, access_token, access_token_secret
+
 
 if __name__ == '__main__':
     authenticate()
